@@ -1,36 +1,28 @@
 import unittest
-import gerador
+import os
+from gerador import *
 from cliente import Cliente
 
 class TestGerador(unittest.TestCase):
 
-#    def setUp(self):
-#        self.seq = list(range(10))
-#
-#
-#    def test_shuffle(self):
-#        # make sure the shuffled sequence does not lose any elements
-#        random.shuffle(self.seq)
-#        self.seq.sort()
-#        self.assertEqual(self.seq, list(range(10)))
-#
-#        # should raise an exception for an immutable sequence
-#        self.assertRaises(TypeError, random.shuffle, (1,2,3))
-#
-#    def test_choice(self):
-#        element = random.choice(self.seq)
-#        self.assertTrue(element in self.seq)
-#
-#    def test_sample(self):
-#        with self.assertRaises(ValueError):
-#            random.sample(self.seq, 20)
-#        for element in random.sample(self.seq, 5):
-#            self.assertTrue(element in self.seq)
+    NOME_ARQUIVO = "unittest.pkl"
 
-    def test_gravacao_clientes():
-        gerar_lote_clientes(100, "unittest.pkl")
-        for cliente in ler_clientes(100, "unittest.pkl"):
+    def test_gravacao_clientes(self):
+        # Gera os clientes
+        gerar_lote_clientes(self.NOME_ARQUIVO, 100)
+
+        # Verifica, se todos os clientes foram salvos e
+        # podem ser lidos
+        clientes = ler_clientes(self.NOME_ARQUIVO, 100)
+        for cliente in clientes:
             self.assertTrue(isinstance(cliente, Cliente))
+
+        # Tenta ler um cliente a mais do que é possível
+        with self.assertRaises(StopIteration):
+            next(clientes)
+
+        # Apaga o arquivo criado
+        os.remove(self.NOME_ARQUIVO)
 
 if __name__ == '__main__':
     unittest.main()

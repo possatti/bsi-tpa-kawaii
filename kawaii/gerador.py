@@ -82,8 +82,8 @@ def ler_clientes(caminho_arquivo, numero_clientes, buffer_size=-1):
 			lidos += 1
 			yield cliente
 
-### TESTE ###
-gerar_lote_clientes("test.pkl", 5)
-
-for cliente in ler_clientes("test.pkl", 5):
-	print(cliente)
+if __name__ == "__main__":
+	### TESTE ###
+	gerar_lote_clientes("test.pkl", 5)
+	for cliente in ler_clientes("test.pkl", 5):
+		print(cliente)
