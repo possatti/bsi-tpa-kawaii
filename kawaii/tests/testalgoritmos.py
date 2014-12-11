@@ -53,7 +53,6 @@ class TestAlgoritmos(unittest.TestCase):
         lista = self.caos[:]
         lista = qsort(lista)
         self.assertTrue(lista == self.ordem)
-        pass
 
     def test_shellsort(self):
         lista = self.caos[:]
