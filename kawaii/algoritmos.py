@@ -1,6 +1,15 @@
 #!/usr/bin/python3
+'''
+Vários algoritmos de ordenação interna, foram recolhidos de
+vários links diferentes e postos nesse arquivo para serem
+usados. As referências aos seus lugares de origem estão
+mantidas em comentários próximos a cada um deles.
+'''
 
-# Selection Sort
+##################
+# Selection Sort #
+##################
+
 # http://pt.wikipedia.org/wiki/Selection_sort#C.C3.B3digo_em_Python
 # http://www.geekviewpoint.com/python/sorting/selectionsort
 def selectsort (L):
@@ -14,7 +23,10 @@ def selectsort (L):
 
 		L[i],L[mini]=L[mini],L[i]
 
-# Insertion Sort
+##################
+# Insertion Sort #
+##################
+
 # http://pt.wikipedia.org/wiki/Insertion_sort#Python
 def insertionSort(v):
 	for j in range(1, len(v)):
@@ -25,7 +37,10 @@ def insertionSort(v):
 			i -= 1
 		v[i + 1] = chave
 
-# Quick Sort
+##############
+# Quick Sort #
+##############
+
 # http://pt.wikipedia.org/wiki/Quicksort#Python
 # http://hetland.org/coding/python/quicksort.html
 def quicksort_simple(v):
@@ -34,15 +49,16 @@ def quicksort_simple(v):
 	less, equal, greater = [], [], [] # cria as sublistas dos maiores, menores e iguais ao pivo
 	pivot = v[0] # escolhe o pivo. neste caso, o primeiro elemento da lista
 	for x in v:
-# adiciona o elemento x a lista correspondeste
+		# adiciona o elemento x a lista correspondeste
 		if x < pivot:
 			less.append(x)
 		elif x == pivot:
 			equal.append(x)
 		else:
 			greater.append(x)
-	return quicksort_simple(less) + equal + quicksort_simple(greater) # concatena e retorna recursivamente
-# .. as listas ordenadas
+
+	# concatena e retorna recursivamente as listas ordenadas
+	return quicksort_simple(less) + equal + quicksort_simple(greater)
 
 def partition(v, left, right):
 	i = left
@@ -66,8 +82,10 @@ def qsort(arr):
 	else:
 		return qsort([x for x in arr[1:] if x<arr[0]]) + [arr[0]] + qsort([x for x in arr[1:] if x>=arr[0]])
 
+##############
+# Shell Sort #
+##############
 
-# Shell Sort
 # http://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Shell_sort#Python
 def shellSort(array):
 	"Shell sort using Shell's (original) gap sequence: n/2, n/4, ..., 1."
@@ -84,7 +102,6 @@ def shellSort(array):
 			array[j] = val
 		gap //= 2
 
-# Shell Sort
 # http://runnable.com/UrTcfTe_GDtiAAMV/algorithms-shell-sort-python
 def sort_shell(my_list):
 
@@ -102,7 +119,6 @@ def sort_gap_insertion(my_list, start, gap):
 
 		val_current = my_list[i]
 		pos = i
-
 		while pos>=gap and my_list[pos-gap] > val_current:
 
 			my_list[pos] = my_list[pos-gap]
