@@ -4,14 +4,25 @@
 import argparse
 import timeit
 
-import kawaii.gerador
-
 # Define os métodos de ordenação
 METODOS_DE_ORDENACAO = ['selection', 'insertion', 'quick', 'shell', 'default']
 
 def generate(args):
-	print('generating!...')
-	print(args)
+	# Provê um nome se já não houver um específicado
+	if not args.nome_arquivo:
+		args.nome_arquivo = str(args.num_clientes) + "-clientes.pkl"
+
+	# Prepara o código que será cronometrado
+	setup = 'from kawaii import gerador'
+	statement = 'gerador.gerar_lote_clientes("{}", {}, buffer_size={})'.format(args.nome_arquivo, args.num_clientes, args.tam_buffer)
+
+	# Executa o código
+	tempo = timeit.timeit(statement, setup, number=1)
+
+	# Exibe o desemplenho da execução, caso o usuário não específique o contrário
+	if not args.quiet:
+		print("O arquivo '" + args.nome_arquivo + "' foi criado contendo " + str(args.num_clientes) + ' clientes fora de ordem.')
+		print('Tempo de execução: ' + str(tempo) + ' segundos.')
 
 def sort(args):
 	print('sorting!...')
@@ -26,8 +37,9 @@ subparsers = parser.add_subparsers()#help='sub-command help')
 # create the parser for the "generate" command
 parser_generate = subparsers.add_parser('generate', help='Gera um arquivo binário com vários clientes fora de ordem.')
 parser_generate.add_argument('num_clientes', type=int, help='Número de clientes a serem gerados.')
-parser_generate.add_argument('nome_arquivo', help='Nome do arquivo, no qual os clientes serão persistidos.')
+parser_generate.add_argument('nome_arquivo', nargs='?', help='Nome do arquivo, no qual os clientes serão persistidos.')
 parser_generate.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
+parser_generate.add_argument('-b', '--tam_buffer', default=-1, help='Tamanho (em bytes) do buffer que será utilizado para a gravação no arquivo. Caso não seja específicado, será utilizado um buffer de tamanho padrão. Para não utilizar buffer algum, específique um buffer de tamanho 0.')
 parser_generate.set_defaults(func=generate)
 
 # create the parser for the "sort" command
@@ -41,4 +53,8 @@ parser_sort.set_defaults(func=sort)
 # parse argument list
 args = parser.parse_args()
 
-args.func(args)
+# Verifica se o usuário chamou um subcomando adequadamente
+if 'func' in vars(args):
+	args.func(args)
+else:
+	parser.print_help()
