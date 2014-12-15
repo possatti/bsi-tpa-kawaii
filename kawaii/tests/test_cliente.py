@@ -1,5 +1,6 @@
 import unittest
-from cliente import Cliente
+
+from kawaii.cliente import Cliente
 
 class TestCliente(unittest.TestCase):
 

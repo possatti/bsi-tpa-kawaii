@@ -1,8 +1,9 @@
 import unittest
 import random
-from algoritmos import *
-from gerador import gerar_cliente
-from cliente import Cliente
+
+from kawaii.algoritmos import *
+from kawaii.gerador import gerar_cliente
+from kawaii.cliente import Cliente
 
 class TestAlgoritmos(unittest.TestCase):
 
@@ -24,7 +25,7 @@ class TestAlgoritmos(unittest.TestCase):
 
     def test_pythonsort(self):
         '''Testa o método de ordenação normal do python.'''
-        
+
         lista = self.caos[:]
         lista.sort()
         self.assertTrue(lista == self.ordem)
@@ -79,7 +80,7 @@ class TestAlgoritmos(unittest.TestCase):
         # Copia a lista, e ordena a nova lista
         clientes_ordem = clientes_caos[:]
         clientes_ordem.sort()
-        
+
         # Verifica que as duas listas são diferentes
         assert(clientes_caos is not clientes_ordem)
 

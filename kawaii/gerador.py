@@ -2,7 +2,8 @@
 
 import random
 import pickle
-from cliente import Cliente
+
+from kawaii.cliente import Cliente
 
 def get_random_letter():
 	return random.choice("abcdefghijklmnopqrstuvwxyz")

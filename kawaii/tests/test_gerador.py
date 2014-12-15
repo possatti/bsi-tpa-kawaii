@@ -1,7 +1,8 @@
 import unittest
 import os
-from gerador import *
-from cliente import Cliente
+
+from kawaii.gerador import *
+from kawaii.cliente import Cliente
 
 class TestGerador(unittest.TestCase):
 
