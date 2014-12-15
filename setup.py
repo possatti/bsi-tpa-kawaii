@@ -7,9 +7,9 @@ setup(
     version='0.1.0dev',
     author='Lucas Possatti',
     packages=['kawaii',],
-    scripts=['bin/helloer',],
+    scripts=['bin/kwii',],
     url='https://github.com/possatti/kawaii',
-    license=open('LICENSE').read(),
+    license="The MIT License (MIT)",
     description='Implementação do trabalho de ordenação para a disciplina de TPA.',
     long_description=open('README').read(),
 )

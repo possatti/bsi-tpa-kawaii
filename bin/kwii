@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+
+import argparse
+import timeit
+
+import kawaii.gerador
+
+# Define os métodos de ordenação
+METODOS_DE_ORDENACAO = ['selection', 'insertion', 'quick', 'shell', 'default']
+
+def generate(args):
+	print('generating!...')
+	print(args)
+
+def sort(args):
+	print('sorting!...')
+	print(args)
+
+# create the top-level parser
+parser = argparse.ArgumentParser(
+	prog='kawaii',
+	description="Programa para o trabalho de TPA.")
+subparsers = parser.add_subparsers()#help='sub-command help')
+
+# create the parser for the "generate" command
+parser_generate = subparsers.add_parser('generate', help='Gera um arquivo binário com vários clientes fora de ordem.')
+parser_generate.add_argument('num_clientes', type=int, help='Número de clientes a serem gerados.')
+parser_generate.add_argument('nome_arquivo', help='Nome do arquivo, no qual os clientes serão persistidos.')
+parser_generate.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
+parser_generate.set_defaults(func=generate)
+
+# create the parser for the "sort" command
+parser_sort = subparsers.add_parser('sort', help='Ordena um arquivo contendo clientes.')
+parser_sort.add_argument('arquivo_entrada', help='Nome do arquivo que será ordenado.')
+parser_sort.add_argument('arquivo_saída', nargs='?', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
+parser_sort.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
+parser_sort.add_argument('-m', '--method', choices=METODOS_DE_ORDENACAO, help='Específica qual método de ordenação deverá ser usado.')
+parser_sort.set_defaults(func=sort)
+
+# parse argument list
+args = parser.parse_args()
+
+args.func(args)
