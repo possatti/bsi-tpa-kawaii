@@ -83,6 +83,19 @@ def ler_clientes(caminho_arquivo, numero_clientes, buffer_size=-1):
 			lidos += 1
 			yield cliente
 
+def produzir_clientes(quantos):
+	"""
+	Gerador para a produção de clientes. Irá produzir até
+	quantos clientes forem especificados. Os clientes são
+	gerados aleatoriamente.
+	"""
+
+	# Produz clientes até atingir o limite específicado
+	criados = 0
+	while criados < quantos:
+		criados += 1
+		yield gerar_cliente()
+
 if __name__ == "__main__":
 	### TESTE ###
 	gerar_lote_clientes("test.pkl", 5)
