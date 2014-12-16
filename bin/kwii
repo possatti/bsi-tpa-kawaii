@@ -47,7 +47,7 @@ parser_sort = subparsers.add_parser('sort', help='Ordena um arquivo contendo cli
 parser_sort.add_argument('arquivo_entrada', help='Nome do arquivo que será ordenado.')
 parser_sort.add_argument('arquivo_saída', nargs='?', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
 parser_sort.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
-parser_sort.add_argument('-m', '--method', choices=METODOS_DE_ORDENACAO, help='Específica qual método de ordenação deverá ser usado.')
+parser_sort.add_argument('-m', '--method', choices=METODOS_DE_ORDENACAO, default='default', help='Específica qual método de ordenação deverá ser usado.')
 parser_sort.set_defaults(func=sort)
 
 # parse argument list
