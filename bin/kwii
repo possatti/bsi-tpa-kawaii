@@ -5,7 +5,7 @@ import argparse
 import timeit
 import time
 
-from kawaii import algoritmos, gerador, persistencia
+from kawaii import algoritmos, gerador, persistencia, inspetor
 
 # Define os métodos de ordenação
 METODOS_DE_ORDENACAO = {
@@ -59,6 +59,27 @@ def ordenar(args):
 		print("O arquivo '" + args.arquivo_entrada + "' foi ordenado para o arquivo '" + args.arquivo_saída + "'.")
 		print('Tempo gasto com a ordenação: ' + str(tempo) + ' segundos.')
 
+def verificar(args):
+	# Abre o arquivo a ser verificado
+	with open(args.nome_arquivo, 'rb') as arq:
+		# Verifica se os clientes estão ordenados
+		ordenado = inspetor.estao_ordenados(arq)
+
+		# Retorna o cursor para o início do arquivo
+		arq.seek(0)
+
+		# Verifica o número de clientes
+		quantidade = inspetor.quantidade_de_clientes(arq)
+
+	# Obtém o tamanho do arquivo
+	tamanho = inspetor.tamanho_do_arquivo(args.nome_arquivo)
+
+	print("O arquivo '", args.nome_arquivo, "' está ",
+		"ordenado" if ordenado else "desordenado",
+		", contém ", quantidade,
+		" clientes, e tem o tamanho de ", tamanho, " bytes.",
+		sep="")
+
 # Cria o parser raíz
 parser = argparse.ArgumentParser(
 	description="Programa de ordenação para o trabalho de TPA.")
@@ -79,6 +100,11 @@ parser_ordenar.add_argument('arquivo_saída', help='Quando presente, ordenará o
 parser_ordenar.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
 parser_ordenar.add_argument('-m', '--metodo', choices=METODOS_DE_ORDENACAO, default='default', help='Específica qual método de ordenação deverá ser usado.')
 parser_ordenar.set_defaults(func=ordenar)
+
+# Cria o parser para o subcomando "verificar"
+parser_verificar = subparsers.add_parser('verificar', help='Busca informações a respeito de um arquivo (ex. se os clientes estão ordenados, o tamanho do arquivo, e quantos clientes há nele).')
+parser_verificar.add_argument('nome_arquivo', help='Nome do arquivo a ser verificado.')
+parser_verificar.set_defaults(func=verificar)
 
 # Faz o parsing da lista de argumentos
 args = parser.parse_args()
