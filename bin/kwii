@@ -15,7 +15,7 @@ METODOS_DE_ORDENACAO = {
 	'shell': algoritmos.shellSort,
 	'default': lambda l: l.sort() }
 
-def generate(args):
+def gerar(args):
 	# Provê um nome se já não houver um específicado
 	if not args.nome_arquivo:
 		args.nome_arquivo = str(args.num_clientes) + "-clientes.pkl"
@@ -32,7 +32,7 @@ def generate(args):
 		print("O arquivo '" + args.nome_arquivo + "' foi criado contendo " + str(args.num_clientes) + ' clientes fora de ordem.')
 		print('Tempo de execução: ' + str(tempo) + ' segundos.')
 
-def sort(args):
+def ordenar(args):
 	print("ARGS: ", args, '\n')#!#
 
 	# Lê os clientes do arquivo para a memória
@@ -61,32 +61,33 @@ def sort(args):
 		print("O arquivo '" + args.arquivo_entrada + "' foi ordenado para o arquivo '" + args.arquivo_saída + "'.")
 		print('Tempo gasto com a ordenação: ' + str(tempo) + ' segundos.')
 
-# create the top-level parser
+# Cria o parser raíz
 parser = argparse.ArgumentParser(
-	description="Programa para o trabalho de TPA.")
-subparsers = parser.add_subparsers()#help='sub-command help')
+	description="Programa de ordenação para o trabalho de TPA.")
+subparsers = parser.add_subparsers()
 
-# create the parser for the "generate" command
-parser_generate = subparsers.add_parser('generate', help='Gera um arquivo binário com vários clientes fora de ordem.')
-parser_generate.add_argument('num_clientes', type=int, help='Número de clientes a serem gerados.')
-parser_generate.add_argument('nome_arquivo', nargs='?', help='Nome do arquivo, no qual os clientes serão persistidos.')
-parser_generate.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
-parser_generate.add_argument('-b', '--tam_buffer', default=-1, help='Tamanho (em bytes) do buffer que será utilizado para a gravação no arquivo. Caso não seja específicado, será utilizado um buffer de tamanho padrão. Para não utilizar buffer algum, específique um buffer de tamanho 0.')
-parser_generate.set_defaults(func=generate)
+# Cria o parser para o subcomando "gerar"
+parser_gerar = subparsers.add_parser('gerar', help='Gera um arquivo binário com vários clientes fora de ordem.')
+parser_gerar.add_argument('num_clientes', type=int, help='Número de clientes a serem gerados.')
+parser_gerar.add_argument('nome_arquivo', nargs='?', help='Nome do arquivo, no qual os clientes serão persistidos.')
+parser_gerar.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
+parser_gerar.add_argument('-b', '--tam_buffer', default=-1, help='Tamanho (em bytes) do buffer que será utilizado para a gravação no arquivo. Caso não seja específicado, será utilizado um buffer de tamanho padrão. Para não utilizar buffer algum, específique um buffer de tamanho 0.')
+parser_gerar.set_defaults(func=gerar)
 
-# create the parser for the "sort" command
-parser_sort = subparsers.add_parser('sort', help='Ordena um arquivo contendo clientes.')
-parser_sort.add_argument('arquivo_entrada', help='Nome do arquivo que será ordenado.')
-parser_sort.add_argument('arquivo_saída', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
-parser_sort.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
-parser_sort.add_argument('-m', '--metodo', choices=METODOS_DE_ORDENACAO, default='default', help='Específica qual método de ordenação deverá ser usado.')
-parser_sort.set_defaults(func=sort)
+# Cria o parser para o subcomando "ordenar"
+parser_ordenar = subparsers.add_parser('ordenar', help='Ordena um arquivo contendo clientes.')
+parser_ordenar.add_argument('arquivo_entrada', help='Nome do arquivo que será ordenado.')
+parser_ordenar.add_argument('arquivo_saída', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
+parser_ordenar.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
+parser_ordenar.add_argument('-m', '--metodo', choices=METODOS_DE_ORDENACAO, default='default', help='Específica qual método de ordenação deverá ser usado.')
+parser_ordenar.set_defaults(func=ordenar)
 
-# parse argument list
+# Faz o parsing da lista de argumentos
 args = parser.parse_args()
 
 # Verifica se o usuário chamou um subcomando adequadamente
 if 'func' in vars(args):
 	args.func(args)
+# Se não, exibe ajuda
 else:
 	parser.print_help()
