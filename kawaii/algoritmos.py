@@ -75,6 +75,10 @@ def quicksort_inplace(v, left, right):
 		quicksort_inplace(v, left, pivotIndex - 1) # Ordena recursivamente os itens menores que o pivo
 		quicksort_inplace(v, pivotIndex + 1, right) # Ordena recursivamente os itens maiores que o pivo
 
+# Pequena função container
+def quicksort(lista):
+	quicksort_inplace(lista, 0, len(lista) - 1)
+
 # http://stackoverflow.com/questions/18262306/quick-sort-with-python
 def qsort(arr):
 	if len(arr) <= 1:
@@ -125,6 +129,3 @@ def sort_gap_insertion(my_list, start, gap):
 			pos = pos-gap
 
 		my_list[pos] = val_current
-
-
-

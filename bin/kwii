@@ -3,9 +3,17 @@
 
 import argparse
 import timeit
+import time
+
+from kawaii import algoritmos, gerador, persistencia
 
 # Define os métodos de ordenação
-METODOS_DE_ORDENACAO = ['selection', 'insertion', 'quick', 'shell', 'default']
+METODOS_DE_ORDENACAO = {
+	'selection': algoritmos.selectsort,
+	'insertion': algoritmos.insertionSort,
+	'quick': algoritmos.quicksort,
+	'shell': algoritmos.shellSort,
+	'default': lambda l: l.sort() }
 
 def generate(args):
 	# Provê um nome se já não houver um específicado
@@ -25,12 +33,36 @@ def generate(args):
 		print('Tempo de execução: ' + str(tempo) + ' segundos.')
 
 def sort(args):
-	print('sorting!...')
-	print(args)
+	print("ARGS: ", args, '\n')#!#
+
+	# Lê os clientes do arquivo para a memória
+	with open(args.arquivo_entrada, 'rb') as arq:
+		clientes = persistencia.ler_clientes(arq)
+
+	# Inicia a contagem de tempo
+	inicio = time.time()
+
+	# Ordena os clientes
+	metodo = METODOS_DE_ORDENACAO[args.metodo]
+	metodo(clientes)
+
+	# Finaliza a contagem de tempo
+	fim = time.time()
+
+	# Calcula o tempo de execução
+	tempo = fim - inicio
+
+	# Grava o resultado da ordenação no arquivo indicado
+	with open(args.arquivo_saída, 'wb') as arq:
+		persistencia.gravar_clientes(arq, clientes)
+
+	# Exibe o desemplenho da execução, caso o usuário não específique o contrário
+	if not args.quiet:
+		print("O arquivo '" + args.arquivo_entrada + "' foi ordenado para o arquivo '" + args.arquivo_saída + "'.")
+		print('Tempo gasto com a ordenação: ' + str(tempo) + ' segundos.')
 
 # create the top-level parser
 parser = argparse.ArgumentParser(
-	prog='kawaii',
 	description="Programa para o trabalho de TPA.")
 subparsers = parser.add_subparsers()#help='sub-command help')
 
@@ -45,9 +77,9 @@ parser_generate.set_defaults(func=generate)
 # create the parser for the "sort" command
 parser_sort = subparsers.add_parser('sort', help='Ordena um arquivo contendo clientes.')
 parser_sort.add_argument('arquivo_entrada', help='Nome do arquivo que será ordenado.')
-parser_sort.add_argument('arquivo_saída', nargs='?', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
+parser_sort.add_argument('arquivo_saída', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
 parser_sort.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
-parser_sort.add_argument('-m', '--method', choices=METODOS_DE_ORDENACAO, default='default', help='Específica qual método de ordenação deverá ser usado.')
+parser_sort.add_argument('-m', '--metodo', choices=METODOS_DE_ORDENACAO, default='default', help='Específica qual método de ordenação deverá ser usado.')
 parser_sort.set_defaults(func=sort)
 
 # parse argument list
