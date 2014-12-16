@@ -33,8 +33,6 @@ def gerar(args):
 		print('Tempo de execução: ' + str(tempo) + ' segundos.')
 
 def ordenar(args):
-	print("ARGS: ", args, '\n')#!#
-
 	# Lê os clientes do arquivo para a memória
 	with open(args.arquivo_entrada, 'rb') as arq:
 		clientes = persistencia.ler_clientes(arq)
