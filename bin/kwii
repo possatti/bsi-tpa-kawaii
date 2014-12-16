@@ -51,12 +51,12 @@ def ordenar(args):
 	tempo = fim - inicio
 
 	# Grava o resultado da ordenação no arquivo indicado
-	with open(args.arquivo_saída, 'wb') as arq:
+	with open(args.arquivo_saida, 'wb') as arq:
 		persistencia.gravar_clientes(arq, clientes)
 
 	# Exibe o desemplenho da execução, caso o usuário não específique o contrário
 	if not args.quiet:
-		print("O arquivo '" + args.arquivo_entrada + "' foi ordenado para o arquivo '" + args.arquivo_saída + "'.")
+		print("O arquivo '" + args.arquivo_entrada + "' foi ordenado para o arquivo '" + args.arquivo_saida + "'.")
 		print('Tempo gasto com a ordenação: ' + str(tempo) + ' segundos.')
 
 def verificar(args):
@@ -96,7 +96,7 @@ parser_gerar.set_defaults(func=gerar)
 # Cria o parser para o subcomando "ordenar"
 parser_ordenar = subparsers.add_parser('ordenar', help='Ordena um arquivo contendo clientes.')
 parser_ordenar.add_argument('arquivo_entrada', help='Nome do arquivo que será ordenado.')
-parser_ordenar.add_argument('arquivo_saída', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
+parser_ordenar.add_argument('arquivo_saida', help='Quando presente, ordenará os clientes para esse arquivo, ao invés do arquivo de entrada.')
 parser_ordenar.add_argument('-q', '--quiet', action='store_true', help='Gera o arquivo sem exibir qualquer saída.')
 parser_ordenar.add_argument('-m', '--metodo', choices=METODOS_DE_ORDENACAO, default='default', help='Específica qual método de ordenação deverá ser usado.')
 parser_ordenar.set_defaults(func=ordenar)
