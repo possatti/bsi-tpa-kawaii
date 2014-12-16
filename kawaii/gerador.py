@@ -24,12 +24,13 @@ def get_random_integers(number):
 	return string
 
 def gerar_cliente():
+	numero = random.randint(1, 1000000)
 	nome = get_random_string(10)
 	sobrenome = get_random_string(20)
 	endereco = get_random_string(30)
 	telefone = get_random_integers(8)
 	saldo = random.randrange(-1000, 1000001)
-	return Cliente(nome, sobrenome, endereco, telefone, saldo)
+	return Cliente(numero, nome, sobrenome, endereco, telefone, saldo)
 
 def gerar_lote_clientes(caminho_arquivo, numero, buffer_size=-1):
 	# Abre o arquivo

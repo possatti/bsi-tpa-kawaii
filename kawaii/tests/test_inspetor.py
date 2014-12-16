@@ -16,9 +16,9 @@ class TestInspetor(unittest.TestCase):
         # Gera uma lista de clientes desordenados e garante que ela
         # possui clientes em uma sequencia desordenada
         clientes_desordenados = list(gerador.produzir_clientes(self.QUANTIDADE_DE_CLIENTES))
-        clientes_desordenados.append(Cliente('Lucas', 'Possatti', 'Guatemala', '12345678', 111))
-        clientes_desordenados.append(Cliente('Mateus', 'Possatti', 'Guatemala', '12345678', 333))
-        clientes_desordenados.append(Cliente('Davi', 'Possatti', 'Guatemala', '12345678', 222))
+        clientes_desordenados.append(Cliente(1, 'Lucas', 'Possatti', 'Guatemala', '12345678', 111))
+        clientes_desordenados.append(Cliente(3, 'Mateus', 'Possatti', 'Guatemala', '12345678', 333))
+        clientes_desordenados.append(Cliente(2, 'Davi', 'Possatti', 'Guatemala', '12345678', 222))
         self.QUANTIDADE_DE_CLIENTES += 3
 
         # Cria uma lista de clientes ordenados, baseando-se na
