@@ -37,6 +37,10 @@ def ordenar(args):
 	with open(args.arquivo_entrada, 'rb') as arq:
 		clientes = persistencia.ler_clientes(arq)
 
+	# Exibe alguma informação sobre o que vai acontecer
+	if not args.quiet:
+		print("O arquivo '" + args.arquivo_entrada + "' será ordenado para o arquivo '" + args.arquivo_saida + "' usando o método '" + args.metodo + "'...")
+
 	# Inicia a contagem de tempo
 	inicio = time.time()
 
@@ -56,7 +60,7 @@ def ordenar(args):
 
 	# Exibe o desemplenho da execução, caso o usuário não específique o contrário
 	if not args.quiet:
-		print("O arquivo '" + args.arquivo_entrada + "' foi ordenado para o arquivo '" + args.arquivo_saida + "'.")
+		print("Ordenação concluída!")
 		print('Tempo gasto com a ordenação: ' + str(tempo) + ' segundos.')
 
 def verificar(args):
