@@ -74,12 +74,18 @@ def verificar(args):
 	# Obtém o tamanho do arquivo
 	tamanho = inspetor.tamanho_do_arquivo(args.nome_arquivo)
 
-	print("O arquivo '", args.nome_arquivo, "' está ",
-		"ordenado" if ordenado else "desordenado",
-		", contém ", quantidade,
-		" clientes, e tem o tamanho de ", tamanho, " bytes.",
+	# Exibe as informações sobre o arquivo
+	if ordenado:
+		print("O arquivo '" + args.nome_arquivo + "' está " + \
+			"ordenado" + \
+			", contém " + str(quantidade) + \
+			" clientes, e tem o tamanho de " + str(tamanho) + " bytes.")
+	else:
+		print("O arquivo '" + args.nome_arquivo + "' está " + \
+			"desordenado" + \
+			", contém " + str(quantidade) + \
+			" clientes, e tem o tamanho de " + str(tamanho) + " bytes.")
 		#sep='') # Não está funcionando
-		)
 
 # Cria o parser raíz
 parser = argparse.ArgumentParser(
