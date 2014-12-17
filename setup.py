@@ -7,7 +7,7 @@ setup(
     version='0.1.0dev',
     author='Lucas Possatti',
     packages=['kawaii',],
-    scripts=['bin/kwii',],
+    scripts=['bin/kwii', 'bin/version_test'],
     url='https://github.com/possatti/kawaii',
     license="The MIT License (MIT)",
     description='Implementação do trabalho de ordenação para a disciplina de TPA.',
