@@ -1,13 +1,10 @@
 #!/bin/sh
 
 # Série de comandos para gerar lotes de clientes desordenados
-kwii gerar 50000
-kwii gerar 100000
-kwii gerar 150000
-kwii gerar 200000
-kwii gerar 250000
-kwii gerar 300000
-kwii gerar 350000
-kwii gerar 400000
-kwii gerar 450000
-kwii gerar 500000
+
+for i in 12500 15000 17500 20000
+# 50000 100000 150000 200000 250000 300000 350000 400000 450000 500000
+do
+	echo " >> kwii gerar $i"
+	kwii gerar $i
+done
