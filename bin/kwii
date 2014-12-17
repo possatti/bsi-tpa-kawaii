@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import argparse
-import timeit
 import time
 
 from kawaii import algoritmos, gerador, persistencia, inspetor
@@ -20,12 +19,17 @@ def gerar(args):
 	if not args.nome_arquivo:
 		args.nome_arquivo = str(args.num_clientes) + "-clientes.pkl"
 
-	# Prepara o código que será cronometrado
-	setup = 'from kawaii import gerador'
-	statement = 'gerador.gerar_lote_clientes("{}", {}, buffer_size={})'.format(args.nome_arquivo, args.num_clientes, args.tam_buffer)
+	# Inicia a contagem de tempo
+	inicio = time.time()
 
-	# Executa o código
-	tempo = timeit.timeit(statement, setup, number=1)
+	# Prepara o código que será cronometrado
+	gerador.gerar_lote_clientes(args.nome_arquivo, args.num_clientes, buffer_size=args.tam_buffer)
+
+	# Finaliza a contagem de tempo
+	fim = time.time()
+
+	# Calcula o tempo de execução
+	tempo = fim - inicio
 
 	# Exibe o desemplenho da execução, caso o usuário não específique o contrário
 	if not args.quiet:
