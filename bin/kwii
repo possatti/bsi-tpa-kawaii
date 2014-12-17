@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
 import argparse
@@ -78,7 +78,8 @@ def verificar(args):
 		"ordenado" if ordenado else "desordenado",
 		", contém ", quantidade,
 		" clientes, e tem o tamanho de ", tamanho, " bytes.",
-		sep="")
+		#sep='') # Não está funcionando
+		)
 
 # Cria o parser raíz
 parser = argparse.ArgumentParser(
